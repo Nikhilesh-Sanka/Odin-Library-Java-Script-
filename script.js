@@ -8,17 +8,30 @@ let bookPages=document.querySelector("#pages");
 let addBookButton=document.querySelector(".add-button");
 let submitButton=document.querySelector("#submit");
 let closeButton=document.querySelector("#close-button");
+//Class That Creates Book Objects//
+class Book{
+    constructor(id,title,author,pages){
+        this.id=id;
+        this.title=title;
+        this.author=author;
+        this.pages=pages;
+    }
+    renderBook () {
+        bookTable.innerHTML+=`<tr id="${this.id}">
+                                <td>${this.number}.)</td>
+                                <td>${this.title}</td>
+                                <td>${this.author}</td>
+                                <td>${this.pages}</td>
+                                <td><button id="${this.id}button">remove</button></td>
+                              </tr>`
+    }
+
+}
 //Functions Needed//
 const renderBooks = (array) => {
     bookTable.innerHTML="";
     for (let book of array){
-        bookTable.innerHTML+=`<tr id="${book.id}">
-                                <td>${book.number}.)</td>
-                                <td>${book.title}</td>
-                                <td>${book.author}</td>
-                                <td>${book.pages}</td>
-                                <td><button id="${book.id}button">remove</button></td>
-                              </tr>`
+        book.renderBook();
     }
     document.querySelectorAll("tr button").forEach((button) => {
         button.addEventListener("click",removeBook);
@@ -37,14 +50,13 @@ const toggleAddBox = () =>{
 const addInputValues = (event) => {
     event.preventDefault();
     if(bookTitle.value!==""&&bookAuthor.value!==""&&bookPages.value!==""){
-        books.push({id:"bookn",title:bookTitle.value,author:bookAuthor.value,pages:bookPages.value});
+        books.push(new Book("bookn",bookTitle.value,bookAuthor.value,bookPages.value));
         correctBookId(books);
     }
     toggleAddBox();
     clearInputs();
 }
 const removeBook = (event) => {
-    console.log(event.target.parentNode.parentNode);
     books=books.filter((book) => book.id!==event.target.parentNode.parentNode.id);
     correctBookId(books);
 }
