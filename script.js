@@ -1,4 +1,3 @@
-//Fuck you//
 //Variables Needed//
 let books=[];
 let bookTable=document.querySelector("tbody");
